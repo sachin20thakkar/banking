@@ -1,8 +1,8 @@
-package com.banking.controller;
+package com.banking.controller.account;
 
 import com.banking.model.client.AccountCreationResponse;
 import com.banking.model.client.Client;
-import com.banking.processor.CreateAccountProcessor;
+import com.banking.processor.account.CreateAccountProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

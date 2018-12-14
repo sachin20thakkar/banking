@@ -16,4 +16,10 @@ public class SavingAccount implements IAccountType {
         logger.info("Saving Account is created");
         return (long)(Math.random() * 100);
     }
+
+    @Override
+    public boolean deleteAccount(long accountNumber) {
+        logger.info("Saving Account is deleted");
+        return true;
+    }
 }

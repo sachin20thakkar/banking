@@ -1,6 +1,6 @@
-package com.banking.processor;
+package com.banking.processor.account;
 
-import com.banking.account.AccountCreationFactory;
+import com.banking.account.AccountFactory;
 import com.banking.account.IAccountType;
 import com.banking.exception.BankingException;
 import com.banking.model.client.AccountCreationResponse;
@@ -14,18 +14,18 @@ import org.springframework.stereotype.Service;
 public class CreateAccountProcessor {
 
     private Logger logger = LoggerFactory.getLogger(CreateAccountProcessor.class);
-    private AccountCreationFactory accountCreationFactory;
+    private AccountFactory accountFactory;
 
     @Autowired
-    public CreateAccountProcessor(AccountCreationFactory accountCreationFactory) {
-        this.accountCreationFactory = accountCreationFactory;
+    public CreateAccountProcessor(AccountFactory accountFactory) {
+        this.accountFactory = accountFactory;
     }
 
     public AccountCreationResponse processRequest(Client client) {
        AccountCreationResponse accountCreationResponse;
        try {
            logger.info("Request processing for account creation " + client);
-           IAccountType accountFactory = accountCreationFactory.getAccount(client.getAccountInfos().getAccountType());
+           IAccountType accountFactory = this.accountFactory.getAccount(client.getAccountInfos().getAccountType());
            accountCreationResponse = new AccountCreationResponse();
            long accountNumber = accountFactory.createAccount(client);
            accountCreationResponse.setAccountNumber(accountNumber);

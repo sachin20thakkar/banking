@@ -15,4 +15,12 @@ public class CurrentAccount implements IAccountType {
         logger.info("Current account is created");
         return (long)(Math.random() * 100);
     }
+
+    @Override
+    public boolean deleteAccount(long accountNumber) {
+        logger.info("Current account is created");
+        return true;
+    }
+
+
 }

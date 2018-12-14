@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service("accountCreationFactory")
-public class AccountCreationFactory {
+public class AccountFactory {
 
-      private static final Logger logger = LoggerFactory.getLogger(AccountCreationFactory.class);
+      private static final Logger logger = LoggerFactory.getLogger(AccountFactory.class);
 
       @Autowired
       private CurrentAccount currentAccount;
@@ -21,7 +21,7 @@ public class AccountCreationFactory {
       private JointAccount jointAccount;
 
       public IAccountType getAccount(int accountType) throws BankingException {
-          logger.info("Getting {} account type"+  accountType);
+          logger.info("Getting {} as account type", accountType);
           switch (accountType) {
               case 1:
                   return savingAccount;
@@ -30,7 +30,7 @@ public class AccountCreationFactory {
               case 3:
                   return jointAccount;
               default:
-                  logger.error("No available account found for {} type", accountType);
+                  logger.error("No available account found for {} account type", accountType);
                   throw new BankingException("No available account type found, please select correct account type");
 
 

@@ -14,4 +14,10 @@ public class JointAccount implements IAccountType {
         logger.info("Joint account is created");
         return (long)(Math.random() * 100);
     }
+
+    @Override
+    public boolean deleteAccount(long accountNumber) {
+        logger.info("Joint account is deleted");
+        return true;
+    }
 }
