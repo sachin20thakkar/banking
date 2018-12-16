@@ -23,7 +23,7 @@ public class DeleteAccountProcessor {
     public AccountResponse processRequest(Long accountNumber) {
         AccountResponse accountResponse;
         try {
-            logger.info("Request processing for account deletion " + accountNumber);
+            logger.info("Request processing for deletion of account {} " ,accountNumber);
             IAccountType accountFactory = this.accountFactory.getAccount(1);
             accountResponse = new AccountResponse();
             boolean response = accountFactory.deleteAccount(accountNumber);

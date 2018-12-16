@@ -28,7 +28,7 @@ public class CreateAccountProcessor {
            IAccountType accountFactory = this.accountFactory.getAccount(client.getAccountInfos().getAccountType());
            accountCreationResponse = new AccountCreationResponse();
            long accountNumber = accountFactory.createAccount(client);
-           accountCreationResponse.setAccountNumber(accountNumber);
+           accountCreationResponse.setConfirmationNumber(accountNumber);
            accountCreationResponse.setStatus("SUCCESS");
 
        }catch (BankingException e) {

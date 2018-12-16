@@ -2,16 +2,16 @@ package com.banking.model.client;
 
 public class AccountCreationResponse {
 
-    private long accountNumber;
+    private long confirmationNumber;
     private String status;
     private String message;
 
-    public long getAccountNumber() {
-        return accountNumber;
+    public long getConfirmationNumber() {
+        return confirmationNumber;
     }
 
-    public void setAccountNumber(long accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setConfirmationNumber(long confirmationNumber) {
+        this.confirmationNumber = confirmationNumber;
     }
 
     public String getStatus() {

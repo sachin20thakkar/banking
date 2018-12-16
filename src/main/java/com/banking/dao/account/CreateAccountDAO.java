@@ -9,13 +9,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@Service("createAccountDAO")
+@Repository("createAccountDAO")
 public class CreateAccountDAO {
 
     private Logger logger = LoggerFactory.getLogger(CreateAccountDAO.class);
@@ -75,13 +75,14 @@ public class CreateAccountDAO {
             @Override
             public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
                 PreparedStatement stmt = connection
-                        .prepareStatement("INSERT into account_info(ACCOUNT_NUMBER, ACCOUNT_FIRST_NAME, ACCOUNT_LAST_NAME, ACCOUNT_BALANCE, ACCOUNT_START_DATE, ACCOUNT_TYPE) VALUES (?, ?, ?, ?, ?, ?)");
+                        .prepareStatement("INSERT into account_info(ACCOUNT_NUMBER, ACCOUNT_FIRST_NAME, ACCOUNT_LAST_NAME, ACCOUNT_BALANCE, ACCOUNT_START_DATE, ACCOUNT_TYPE, PAN_NUMBER) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 stmt.setInt(1, accountNumber);
-                stmt.setString(2, client.getFirstName());
-                stmt.setString(3, client.getLastName());
+                stmt.setString(2, client.getAccountInfos().getFirstName());
+                stmt.setString(3, client.getAccountInfos().getLastName());
                 stmt.setLong(4, client.getAccountInfos().getAccountBalance());
                 stmt.setDate(5, new Date(System.currentTimeMillis()));
                 stmt.setInt(6, client.getAccountInfos().getAccountType());
+                stmt.setString(7, client.getAccountInfos().getPanNumber());
                 return stmt;
             }
         });

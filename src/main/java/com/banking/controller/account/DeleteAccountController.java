@@ -20,10 +20,10 @@ public class DeleteAccountController {
         @Autowired
         private DeleteAccountProcessor deleteAccountProcessor;
 
-        @RequestMapping(value = "/deleteaccount/{accountNumber}", method = RequestMethod.POST, produces = "application/json")
+        @RequestMapping(value = "/deleteAccount/{accountNumber}", method = RequestMethod.POST, produces = "application/json")
         @ResponseBody
         public ResponseEntity<AccountResponse> deleteAccount(@PathVariable(value = "accountNumber") long accountNumber) {
-            logger.info("Getting Request for account deletion: "+ accountNumber);
+            logger.info("Getting Request for account deletion: {}", accountNumber);
             AccountResponse accountResponse  = deleteAccountProcessor.processRequest(accountNumber);
             return new ResponseEntity<>(accountResponse, HttpStatus.OK);
         }

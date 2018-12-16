@@ -2,29 +2,12 @@ package com.banking.model.client;
 
 public class Client {
 
-    private String firstName;
-    private String lastName;
+
     private long clientId;
     private Address permanentAddress;
     private Address residentialAddress;
     private ContactDetails contactDetails;
     private AccountInfo accountInfos;
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public long getClientId() {
         return clientId;
@@ -66,12 +49,11 @@ public class Client {
         this.accountInfos = accountInfos;
     }
 
+
     @Override
     public String toString() {
         return "Client{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", clientId=" + clientId +
+                "clientId=" + clientId +
                 ", permanentAddress=" + permanentAddress +
                 ", residentialAddress=" + residentialAddress +
                 ", contactDetails=" + contactDetails +
