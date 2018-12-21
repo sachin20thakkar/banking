@@ -1,10 +1,12 @@
 package com.banking.dao.beneficiary;
 
 
+
+
 import com.banking.dao.account.util.GenerateSequenceDAO;
 import com.banking.exception.BankingException;
 import com.banking.model.beneficiary.BeneficiaryInfo;
-import com.banking.model.client.Client;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +14,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-@Service("beneficiaryImplDAO")
+@Repository("beneficiaryImplDAO")
 public class BeneficiaryImplDAO implements BeneficiaryDAO {
 
     private Logger logger = LoggerFactory.getLogger(BeneficiaryImplDAO.class);
@@ -42,6 +46,26 @@ public class BeneficiaryImplDAO implements BeneficiaryDAO {
             logger.info("Exception to add beneficiary at DAO layer {}", e.getMessage());
             throw new BankingException(e);
         }
+    }
+
+
+    @Override
+    public List<BeneficiaryInfo> getBeneficiary(long clientId) throws BankingException {
+        logger.info("Getting request to get beneficiary info for {} at DAO", clientId);
+        List<BeneficiaryInfo> beneficiaryInfoList = new ArrayList<>();
+        List<Map<String, Object>> resultSetList = jdbcTemplate.queryForList("select * from beneficiary_info where client_id = ?",  new Object [] {clientId});
+        for(Map resultSet: resultSetList) {
+            BeneficiaryInfo beneficiaryInfo = new BeneficiaryInfo();
+            beneficiaryInfo.setBeneficiaryAccountNumber((String)resultSet.get("BENEFICIARY_ACCOUNT_NUMBER"));
+            beneficiaryInfo.setBeneficiaryAccountType((Integer) resultSet.get("BENEFICIARY_ACCOUNT_TYPE"));
+            beneficiaryInfo.setBeneficiaryName((String)resultSet.get("BENEFICIARY_NAME"));
+            beneficiaryInfo.setBeneficiaryType((Integer) resultSet.get("BENEFICIARY_TYPE"));
+            beneficiaryInfo.setClientId(Integer.valueOf(resultSet.get("CLIENT_ID").toString()));
+            beneficiaryInfo.setEmailId((String) resultSet.get("EMAIL_ID"));
+            beneficiaryInfo.setIfscCode((String) resultSet.get("IFSC_CODE"));
+            beneficiaryInfoList.add(beneficiaryInfo);
+        }
+        return beneficiaryInfoList;
     }
 
     private int insertBeneficiaryInfo(BeneficiaryInfo beneficiaryInfo, int sequence) {

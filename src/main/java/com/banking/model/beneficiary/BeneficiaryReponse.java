@@ -1,10 +1,13 @@
 package com.banking.model.beneficiary;
 
+import java.util.List;
+
 public class BeneficiaryReponse {
 
     private long confirmationNumber;
     private String status;
     private String message;
+    private List<BeneficiaryInfo> beneficiaryInfoList;
 
     public long getConfirmationNumber() {
         return confirmationNumber;
@@ -28,5 +31,13 @@ public class BeneficiaryReponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public List<BeneficiaryInfo> getBeneficiaryInfoList() {
+        return beneficiaryInfoList;
+    }
+
+    public void setBeneficiaryInfoList(List<BeneficiaryInfo> beneficiaryInfoList) {
+        this.beneficiaryInfoList = beneficiaryInfoList;
     }
 }

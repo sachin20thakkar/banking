@@ -30,4 +30,12 @@ public class BeneficiaryController {
         return new ResponseEntity<>(beneficiaryReponse, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/getBeneficiary/{clientId}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<BeneficiaryReponse> getBeneficiary(@PathVariable(value = "clientId") long clientId) {
+        logger.info("Getting Request to get beneficiary info for client : {} ", clientId);
+        BeneficiaryReponse beneficiaryReponse  = beneficiaryProcessor.getBeneficiaryInfo(clientId);
+        return new ResponseEntity<>(beneficiaryReponse, HttpStatus.OK);
+    }
+
 }
