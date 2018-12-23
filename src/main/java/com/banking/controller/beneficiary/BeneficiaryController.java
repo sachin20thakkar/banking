@@ -38,4 +38,12 @@ public class BeneficiaryController {
         return new ResponseEntity<>(beneficiaryReponse, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/updateBeneficiary", method = RequestMethod.POST, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<BeneficiaryReponse> updateBeneficiary(@RequestBody BeneficiaryInfo beneficiaryInfo) {
+        logger.info("Getting Request for beneficiary update: {} ", beneficiaryInfo);
+        BeneficiaryReponse beneficiaryReponse  = beneficiaryProcessor.updateBeneficiaryInfo(beneficiaryInfo);
+        return new ResponseEntity<>(beneficiaryReponse, HttpStatus.OK);
+    }
+
 }

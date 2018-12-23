@@ -2,6 +2,7 @@ package com.banking.model.beneficiary;
 
 public class BeneficiaryInfo {
 
+    private long beneficiaryId;
     private int beneficiaryType;
     private String beneficiaryAccountNumber;
     private int beneficiaryAccountType;
@@ -9,6 +10,14 @@ public class BeneficiaryInfo {
     private String emailId;
     private long clientId;
     private String ifscCode;
+
+    public long getBeneficiaryId() {
+        return beneficiaryId;
+    }
+
+    public void setBeneficiaryId(long beneficiaryId) {
+        this.beneficiaryId = beneficiaryId;
+    }
 
     public int getBeneficiaryType() {
         return beneficiaryType;

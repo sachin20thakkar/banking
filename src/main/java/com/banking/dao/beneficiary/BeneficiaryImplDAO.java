@@ -1,8 +1,5 @@
 package com.banking.dao.beneficiary;
 
-
-
-
 import com.banking.dao.account.util.GenerateSequenceDAO;
 import com.banking.exception.BankingException;
 import com.banking.model.beneficiary.BeneficiaryInfo;
@@ -15,7 +12,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -56,6 +52,7 @@ public class BeneficiaryImplDAO implements BeneficiaryDAO {
         List<Map<String, Object>> resultSetList = jdbcTemplate.queryForList("select * from beneficiary_info where client_id = ?",  new Object [] {clientId});
         for(Map resultSet: resultSetList) {
             BeneficiaryInfo beneficiaryInfo = new BeneficiaryInfo();
+            beneficiaryInfo.setBeneficiaryId(Integer.valueOf(resultSet.get("TRANSACTION_ID").toString()));
             beneficiaryInfo.setBeneficiaryAccountNumber((String)resultSet.get("BENEFICIARY_ACCOUNT_NUMBER"));
             beneficiaryInfo.setBeneficiaryAccountType((Integer) resultSet.get("BENEFICIARY_ACCOUNT_TYPE"));
             beneficiaryInfo.setBeneficiaryName((String)resultSet.get("BENEFICIARY_NAME"));
@@ -66,6 +63,21 @@ public class BeneficiaryImplDAO implements BeneficiaryDAO {
             beneficiaryInfoList.add(beneficiaryInfo);
         }
         return beneficiaryInfoList;
+    }
+
+
+    @Override
+    public void updateBeneficiary(BeneficiaryInfo beneficiaryInfo) throws BankingException {
+        try{
+            logger.info("Getting request to update beneficiary info for {} at DAO", beneficiaryInfo);
+            String sql = "Update beneficiary_info set BENEFICIARY_TYPE = ? , BENEFICIARY_ACCOUNT_NUMBER = ?, BENEFICIARY_ACCOUNT_TYPE = ?, IFSC_CODE = ?, BENEFICIARY_NAME = ?, EMAIL_ID = ? where TRANSACTION_ID = ?";
+            jdbcTemplate.update(sql, new Object[] {beneficiaryInfo.getBeneficiaryType(), beneficiaryInfo.getBeneficiaryAccountNumber(),
+                    beneficiaryInfo.getBeneficiaryAccountType(), beneficiaryInfo.getIfscCode(), beneficiaryInfo.getBeneficiaryName(),
+                    beneficiaryInfo.getEmailId(), beneficiaryInfo.getBeneficiaryId()});
+        }catch (Exception e) {
+            logger.info("Exception to add beneficiary at DAO layer {}", e.getMessage());
+            throw new BankingException(e);
+        }
     }
 
     private int insertBeneficiaryInfo(BeneficiaryInfo beneficiaryInfo, int sequence) {

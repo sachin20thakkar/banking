@@ -11,5 +11,7 @@ public interface BeneficiaryDAO {
 
     List<BeneficiaryInfo> getBeneficiary(long clientId) throws BankingException;
 
+    void updateBeneficiary(BeneficiaryInfo beneficiaryInfo) throws BankingException;
+
 
 }

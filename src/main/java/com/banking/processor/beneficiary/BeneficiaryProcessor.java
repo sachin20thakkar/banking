@@ -63,4 +63,26 @@ public class BeneficiaryProcessor {
         return beneficiaryReponse;
 
     }
+
+    public BeneficiaryReponse updateBeneficiaryInfo(BeneficiaryInfo beneficiaryInfo) {
+
+        BeneficiaryReponse beneficiaryReponse = new BeneficiaryReponse();
+        try {
+            logger.info("Request processing to update beneficiary info {}" , beneficiaryInfo);
+            beneficiaryImplDAO.updateBeneficiary(beneficiaryInfo);
+            beneficiaryReponse.setStatus("SUCCESS");
+
+        }catch (BankingException e) {
+            logger.error(e.getMessage(), e);
+            beneficiaryReponse = new BeneficiaryReponse();
+            beneficiaryReponse.setStatus("FAILURE");
+            beneficiaryReponse.setMessage("Beneficiary retrieval failed. Please contact service desk");
+        }
+
+        return beneficiaryReponse;
+
+    }
+
+
+
 }
