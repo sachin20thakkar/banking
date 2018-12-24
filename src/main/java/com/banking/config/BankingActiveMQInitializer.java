@@ -5,6 +5,7 @@ import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
@@ -22,6 +23,7 @@ public class BankingActiveMQInitializer {
     public ConnectionFactory activeMQConnectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL("tcp://localhost:61616");
+
         return activeMQConnectionFactory;
     }
 
@@ -48,6 +50,15 @@ public class BankingActiveMQInitializer {
         mappingJackson2MessageConverter.setTargetType(MessageType.TEXT);
         mappingJackson2MessageConverter.setTypeIdPropertyName("_messageType");
         return mappingJackson2MessageConverter;
+    }
+
+    @Bean
+    public DefaultJmsListenerContainerFactory jmsListenerContainerFactory() {
+        DefaultJmsListenerContainerFactory factory
+                = new DefaultJmsListenerContainerFactory();
+        factory.setConnectionFactory(activeMQConnectionFactory());
+        factory.setMessageConverter(jacksonMessageConverter());
+        return factory;
     }
 
 }
