@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Repository("internalTransferDAO")
@@ -16,6 +17,7 @@ public class InternalTransferDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Transactional
     public void transferCash(TransferRequest transferRequest) {
 
         logger.info("Getting request to update transfer case info {}", transferRequest);
@@ -40,7 +42,7 @@ public class InternalTransferDAO {
 
     private void updateToAccountBalance(long accountNumber, long toAccountBalance, long amount) {
         long currentAmount = toAccountBalance + amount;
-        String sql = "update account_info set account_balance = ? where account_numberrr = ?";
+        String sql = "update account_info set account_balance = ? where account_number = ?";
         jdbcTemplate.update(sql, new Object[] {currentAmount, accountNumber});
     }
 
